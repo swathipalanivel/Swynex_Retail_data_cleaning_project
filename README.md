@@ -1,4 +1,3 @@
-
 # Retail Data Cleaning and Preparation
 
 ## 1. Project Overview
