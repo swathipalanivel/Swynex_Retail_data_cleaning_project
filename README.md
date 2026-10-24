@@ -56,7 +56,7 @@ Revenue = Quantity × Unit Price
 
 ## 6. Project Files
 
-- `compressed_data.csv.gz` — Compressed cleaned dataset for easier upload and sharing.
+- `cleaned_retail_data_under_25mb` — Compressed cleaned dataset for easier upload and sharing.
 - `clean_data.py` — Python script used for data cleaning, if included in the repository.
 - `README.md` — Project documentation.
 
