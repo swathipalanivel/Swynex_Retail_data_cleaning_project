@@ -1,83 +1,75 @@
-# Retail Data Cleaning and Preparation
+# Online Retail Sales Analysis Dashboard
 
-## 1. Project Overview
+## Project Overview
+This project explores the UCI Online Retail transaction dataset and presents sales performance in an interactive Tableau Public dashboard. The aim is to make sales trends, product performance, country contribution, customer activity, and returns easier to understand.
 
-This project focuses on cleaning and preparing a raw retail transaction dataset for data analysis. The goal is to improve data quality by identifying missing values, duplicate records, incorrect data types, and inconsistent values.
+> **Before publishing:** Replace every item marked `TODO` with values and screenshots from your own completed Tableau workbook. Do not publish estimated or unverified KPI values.
 
-**Project Type:** Data Analytics — Data Cleaning  
-**Tools:** Python, Pandas, Excel, GitHub
+## Business Questions
+- How does revenue change month by month?
+- Which products generate the highest revenue?
+- Which countries contribute most to revenue?
+- How many orders and units are recorded?
+- How many unique customers are represented?
+- How does the quantity of returned items change over time?
 
-## 2. Dataset Source
+## Tools Used
+- Python / Pandas — data preparation (if used in your workflow)
+- Tableau Public — interactive visualisation and dashboard
+- CSV — cleaned data source
 
-The dataset is obtained from the UCI Machine Learning Repository.
+## Dataset
+The project uses the Online Retail dataset, containing transaction-level records with fields such as `InvoiceNo`, `StockCode`, `Description`, `Quantity`, `InvoiceDate`, `UnitPrice`, `CustomerID`, and `Country`.
 
-**Dataset:** Online Retail
+## Data Preparation
+The dataset was prepared for analysis. The project workflow includes checking missing values and duplicates, confirming data types, and creating a revenue measure from quantity and unit price.
 
-**Source:** https://archive.ics.uci.edu/dataset/352/online+retail
+**Sales Revenue calculation used in Tableau:**
+```tableau
+IF [Quantity] > 0
+AND [UnitPrice] > 0
+AND LEFT(STR([InvoiceNo]), 1) <> "C"
+THEN [Revenue]
+END
+```
+The `[Revenue]` field is calculated as:
+```tableau
+[Quantity] * [UnitPrice]
+```
+This measure focuses on positive-quantity, positive-price transactions and excludes invoice numbers beginning with `C`. Returns are analysed separately using negative quantities.
 
-The dataset contains retail transaction information, including invoice numbers, product codes, product descriptions, quantities, invoice dates, unit prices, customer IDs, and countries.
+## Dashboard KPIs
+- Total Sales Revenue — `SUM([Sales Revenue])`
+- Total Orders — `COUNTD([InvoiceNo])`
+- Units Sold — `SUM([Quantity])` (confirm whether the worksheet is filtered to sales-only transactions)
+- Unique Customers — `COUNTD([CustomerID])`, excluding null CustomerID
+- Average Order Value — `SUM([Sales Revenue]) / COUNTD([InvoiceNo])`
 
-## 3. Project Objectives
+## Visualisations
+1. Monthly Sales Trend — monthly revenue over time
+2. Top 10 Products — products ranked by sales revenue
+3. Revenue by Country — revenue contribution by country
+4. Returns Analysis — returned quantity over time
 
-- Identify missing values in the dataset.
-- Detect and remove duplicate records.
-- Correct inappropriate data types.
-- Standardize inconsistent text values.
-- Review invalid or unusual quantities and prices.
-- Prepare the dataset for further analysis and visualization.
+## Interactivity
+The dashboard is designed to include useful filters such as date and country. Add and test any additional filters you have implemented before describing them as available.
 
-## 4. Data Cleaning Process
+## Key Findings
+Add at least three findings after checking your actual Tableau results:
+1. TODO — highest-revenue month and its value.
+2. TODO — leading country and its share/value.
+3. TODO — top product by revenue.
+4. TODO — notable pattern in returns.
 
-### Missing Values
-Checked missing values in each column and reviewed their impact on analysis. Missing customer IDs were retained where possible rather than automatically deleting those transactions.
+## Dashboard Preview
+TODO — Add a screenshot of your final Tableau dashboard here.
 
-### Duplicate Records
-Identified and removed exact duplicate rows to reduce unnecessary repeated records.
+## How to View
+- Open the published Tableau Public workbook: TODO — paste your Tableau Public URL.
+- Or download the workbook from Tableau Public if you have enabled downloads.
 
-### Data Type Correction
-Converted the invoice date column into a datetime format and ensured quantity and unit price columns were numeric.
+## Author
+Swathi Palanivel
 
-### Text Standardization
-Removed unnecessary leading and trailing spaces from selected text columns.
-
-### Data Validation
-Reviewed unusual quantities and prices. Negative quantities may represent product returns, so they should not be removed without understanding their business meaning.
-
-### Revenue Calculation
-Created a revenue column using the following calculation:
-
-Revenue = Quantity × Unit Price
-
-## 5. Tools and Technologies
-
-- **Python:** Used to perform data cleaning and validation.
-- **Pandas:** Used for data manipulation and handling missing values and duplicates.
-- **GitHub:** Used to store and document the project.
-
-## 6. Project Files
-
-- `cleaned_retail_data_under_25mb` — Compressed cleaned dataset for easier upload and sharing.
-- `clean_data.py` — Python script used for data cleaning, if included in the repository.
-- `README.md` — Project documentation.
-
-## 7. Results and Validation
-
-The cleaning process includes checks for missing values, duplicate records, data types, and unusual values.
-
-- Original row count: To be confirmed.
-- Final row count: To be confirmed.
-- Duplicate records removed: To be confirmed.
-- Remaining missing values: To be confirmed.
-
-The final results should be updated after running the cleaning script and validating the exported dataset.
-
-## 8. Conclusion
-
-This project demonstrates the importance of data cleaning as an essential step in the data analytics workflow. By identifying data-quality issues and applying appropriate cleaning methods, the dataset can be prepared for more reliable analysis, reporting, and visualization.
-
-## 9. Author
-
-**Swathi Palanivel**
-
-Aspiring Data Analyst
-
+## Notes
+This is a portfolio learning project. KPI definitions and filters should be checked against the workbook before interpreting the results. In particular, verify whether Units Sold and Total Orders exclude returns/cancellations consistently.
